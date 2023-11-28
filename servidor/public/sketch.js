@@ -7,9 +7,10 @@ let user = {
 let backgroundImage;
 let backgroundImage2;
 let imagemLogo;
-let scene=0;
+let scene=1;
 let form_scene=true;
 let executedOnce = false;
+let hello
 
 let imagem_carta_frente;
 let imagem_carta_costas;
