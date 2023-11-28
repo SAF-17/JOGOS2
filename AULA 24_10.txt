@@ -1,0 +1,32 @@
+Aula prática jogos 24/10
+
+
+POST E GET
+
+
+noLoop();--> na função draw interrompe o loop de 60fps
+
+loop(); --> utilizdo para retomar o loop anteriormente parado( ex. stor-> função mousepressed)
+
+REQ--> VEM DO CLIENTE
+RES--> vem do servidor
+
+npm install bodyparser
+
+
+mysql,quando se vai buscar um dado, ele é apresentado num array
+L--> moldar os dados
+
+---------------//---------------
+ABRIR SERVIDOR 
+
+cd *nome pasta*
+npm init
+npm install express
+npm install mysql
+npm install bodyparser
+ligar xampp
+cd C:\Users\Simão\Desktop\JOGOS2\servidor
+node server.js 
+abrir porta 3000
+-----------------//------------------
