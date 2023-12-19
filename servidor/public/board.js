@@ -120,19 +120,6 @@ function handleFieldClick(field, x, y, fieldType) {
 }
 
 
-// function moveCard(field, i, j) {
-// if (field[i][j].hasCard && selectedCard === null) {
-//   // Se a tile de origem tem uma carta e nenhuma carta está selecionada, apenas a seleciona
-//   selectedCard = { row: i, col: j };
-//   //console.log("Selected card at:", i, j);
-// } else if (selectedCard !== null) {
-//   // Se uma carta já está selecionada, move a carta para a nova posição
-//   field[i][j].hasCard = true;
-//   field[selectedCard.row][selectedCard.col].hasCard = false;
-//   //console.log("Moved card to:", i, j);
-//   selectedCard = null; // Limpa a carta selecionada
-// }
-// }
 class Tile {
 constructor(x, y, tx, ty, w, h, hasCard,campo_teste) {
   this.x = x;
@@ -180,3 +167,9 @@ loadJSON('/getCards',(dataDoServidor)=>{
   console.log(dataDoServidor);
   loop();
 });}
+
+
+
+function battle(){
+  
+}
