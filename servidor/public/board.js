@@ -79,29 +79,39 @@ for (let i = 0; i < field.length; i++) {
   }
 }
 }
-
 function handleFieldClick(field, x, y, fieldType) {
-for (let i = 0; i < field.length; i++) {
-  for (let j = 0; j < field[i].length; j++) {
-    if (field[i][j].click_Tile(x, y)) {
-      console.log("Clicked on", fieldType, "field at:", i, j);
-      if (field[i][j].hasCard && selectedCard === null) {
-        // Se a tile de origem tem uma carta e nenhuma carta está selecionada, apenas a seleciona
-        selectedCard = { row: i, col: j };
-        console.log("Selected card at:", i, j);
-      } else if (selectedCard !== null) {
-        // Se uma carta já está selecionada, move a carta para a nova posição
-        field[i][j].hasCard = true;
-        field[selectedCard.row][selectedCard.col].hasCard = false;
-        console.log("Moved card to:", i, j);
-        selectedCard = null; // Limpa a carta selecionada
-       // getCards()
-       loop();
+  for (let i = 0; i < field.length; i++) {
+    for (let j = 0; j < field[i].length; j++) {
+      if (field[i][j].click_Tile(x, y)) {
+        console.log("Clicked on", fieldType, "field at:", i, j);
+        if (field[i][j].hasCard && selectedCard === null) {
+          // Se a tile de origem tem uma carta e nenhuma carta está selecionada, apenas a seleciona
+          selectedCard = { row: i, col: j, campo_teste: field[i][j].campo_teste };
+          console.log("Selected card at:", i, j);
+        } else if (selectedCard !== null) {
+          // Se uma carta já está selecionada, move a carta para a nova posição
+          if (i !== selectedCard.row || j !== selectedCard.col) {
+            // Verifica se a carta está sendo movida para uma posição diferente da posição inicial
+            if (field[i][j].campo_teste === selectedCard.campo_teste) {
+              // Verifica se a origem e o destino estão no mesmo campo
+              field[i][j].hasCard = true;
+              field[selectedCard.row][selectedCard.col].hasCard = false;
+              console.log("Moved card to:", i, j);
+            } else {
+              console.log("Card cannot move across fields.");
+            }
+          } else {
+            console.log("Card stayed in the same position:", i, j);
+          }
+          selectedCard = null; // Limpa a carta selecionada
+          // getCards()
+          loop();
+        }
       }
     }
   }
 }
-}
+
 
 // function moveCard(field, i, j) {
 // if (field[i][j].hasCard && selectedCard === null) {
