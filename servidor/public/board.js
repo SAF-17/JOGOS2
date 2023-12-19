@@ -92,12 +92,14 @@ function handleFieldClick(field, x, y, fieldType) {
           // Se uma carta já está selecionada, move a carta para a nova posição
           if (i !== selectedCard.row || j !== selectedCard.col) {
             // Verifica se a carta está sendo movida para uma posição diferente da posição inicial
-            if (field[i][j].campo_teste === selectedCard.campo_teste) {
+            if (field[i][j].campo_teste !== selectedCard.campo_teste) {
+              console.log("ATACK TIME")
+            }else if (field[i][j].campo_teste === selectedCard.campo_teste) {
               // Verifica se a origem e o destino estão no mesmo campo
               field[i][j].hasCard = true;
               field[selectedCard.row][selectedCard.col].hasCard = false;
               console.log("Moved card to:", i, j);
-            } else {
+            }else {
               console.log("Card cannot move across fields.");
             }
           } else {
