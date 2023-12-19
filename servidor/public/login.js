@@ -168,8 +168,8 @@ function postUser(){
 
                 //botão troca de form
 
-                changeBTN = createButton('Trocar');
-                changeBTN.position(formX+formWidth/2-40  , formHeight *2  );
+                changeBTN = createButton('LOGIN/REGISTAR');
+                changeBTN.position(formX+formWidth/3  , formHeight*1.7  );
                 changeBTN.style('background-color', '#a87a63');
                 changeBTN.style('border', 'none');
                 changeBTN.style('padding', '10px 20px');
