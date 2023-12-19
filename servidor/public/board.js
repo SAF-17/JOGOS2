@@ -90,9 +90,12 @@ function handleFieldClick(field, x, y, fieldType) {
           console.log("Selected card at:", i, j);
         } else if (selectedCard !== null) {
           // Se uma carta já está selecionada, move a carta para a nova posição
-          if (i !== selectedCard.row || j !== selectedCard.col) {
+          // if (i !== selectedCard.row || j !== selectedCard.col && field[i][j].campo_teste !== selectedCard.campo_teste ) {
+          // L-> PARA VERIFICAR SE ESTÁ A ATACAR O CAMPO ENIMIGO(NÃO DEIXA ANDAR NA HORIZONTAL)
+          
+            if (i !== selectedCard.row || j !== selectedCard.col && field[i][j].campo_teste !== selectedCard.campo_teste ) {
             // Verifica se a carta está sendo movida para uma posição diferente da posição inicial
-            if (field[i][j].campo_teste === selectedCard.campo_teste) {
+             if (field[i][j].campo_teste === selectedCard.campo_teste) {
               // Verifica se a origem e o destino estão no mesmo campo
               field[i][j].hasCard = true;
               field[selectedCard.row][selectedCard.col].hasCard = false;
@@ -100,7 +103,11 @@ function handleFieldClick(field, x, y, fieldType) {
             } else {
               console.log("Card cannot move across fields.");
             }
-          } else {
+          }if (field[i][j].campo_teste !== selectedCard.campo_teste && field[i][j].campo_teste !== selectedCard.campo_teste && field[i][j].hasCard === true){
+            console.log("Attack TIME")
+            console.log(selectedCard)
+
+          }else {
             console.log("Card stayed in the same position:", i, j);
           }
           selectedCard = null; // Limpa a carta selecionada
