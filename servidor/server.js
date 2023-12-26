@@ -148,3 +148,18 @@ app.get('/getImagem_carta_frente', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
+
+//Buscar cartas
+
+app.get('/getCartas',(req,res)=>{
+  let sql="SELECT * FROM deck_carta";
+  
+
+  dbase.query(sql, (err,result)=>{
+    if(err) throw err;
+    res.send(result);
+    });
+  
+});

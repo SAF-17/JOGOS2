@@ -92,13 +92,23 @@ function handleFieldClick(field, x, y, fieldType) {
           // Se uma carta já está selecionada, move a carta para a nova posição
           if (i !== selectedCard.row || j !== selectedCard.col) {
             // Verifica se a carta está sendo movida para uma posição diferente da posição inicial
-            if (field[i][j].campo_teste !== selectedCard.campo_teste) {
-              console.log("ATACK TIME")
+            
+
+            if (field[i][j].campo_teste !== selectedCard.campo_teste) {// Verificação de ataque
+              if(field[i][j].hasCard===false){// Se o campo selecionado não tivar carta do adversário
+
+                console.log("Acerta numa carta")
+              }else if(field[i][j].hasCard===true){//Se o campo onde selecionar tiver carta
+
+                console.log("ATTACK TIME")
+                attackTIME();
+              }
             }else if (field[i][j].campo_teste === selectedCard.campo_teste) {
               // Verifica se a origem e o destino estão no mesmo campo
               field[i][j].hasCard = true;
               field[selectedCard.row][selectedCard.col].hasCard = false;
               console.log("Moved card to:", i, j);
+            
             }else {
               console.log("Card cannot move across fields.");
             }
@@ -114,6 +124,34 @@ function handleFieldClick(field, x, y, fieldType) {
   }
 }
 
+let cardList;
+
+function attackTIME() {
+  // Get the attack and defense values of each card
+  loadJSON('/getCartas', (dataDoServidor) => {
+     cardList.forEach((card) => {
+       // Find the card in the server data by id
+       const serverCard = dataDoServidor.find((cardData) => cardData.id === card.id);
+ 
+       if (serverCard) {
+         // Update the attack and defense values of the card
+         card.ATK = serverCard.attack_carta;
+         card.DEF = serverCard.defend_carta;
+       }
+     });
+ 
+     // Loop through all the cards
+     for (let i = 0; i < cardList.length; i++) {
+       for (let j = i + 1; j < cardList.length; j++) {
+         // Compare the attack and defense values of each card
+         if (cardList[i].ATK > cardList[j].ATK && cardList[i].DEF > cardList[j].DEF) {
+           // Update the card data on the server side
+           // Use a different API endpoint for this purpose
+         }
+       }
+     }
+  });
+ }
 
 // function moveCard(field, i, j) {
 // if (field[i][j].hasCard && selectedCard === null) {
@@ -145,7 +183,7 @@ constructor(x, y, tx, ty, w, h, hasCard,campo_teste) {
 draw_Tile(cellColor) {
   fill(cellColor); // Use a cor passada como argumento
   rect(this.x, this.y, this.w, this.h);
-  if (this.hasCard) {
+  if (this.hasCard) {//cria carta
     if(this.tx == 2 && this.campo_teste== 1 || this.tx == 0 && this.campo_teste== 3 ){
     image(this.img_costas,this.x + this.w / 4, this.y + this.h / 4, this.w / 2, this.h /2);
     }else {
@@ -164,14 +202,14 @@ click_Tile(x, y) {
 }
 }
 
-function getCards(){
+function getCartas(){
 
-loadJSON('/getCards',(dataDoServidor)=>{
+loadJSON('/getCartas',(dataDoServidor)=>{
 
-  card.name=dataDoServidor[0].Name;
-  card.ATK=dataDoServidor[0].ATK;
-  card.DEF=dataDoServidor[0].DEF;
+  card.name=dataDoServidor[0].nome_carta;
+  card.ATK=dataDoServidor[0].attack_carta;
+  card.DEF=dataDoServidor[0].defend_carta;
 
-  console.log(dataDoServidor);
-  loop();
+  // console.log(dataDoServidor);
+  // loop();
 });}
