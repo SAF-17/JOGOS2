@@ -124,48 +124,72 @@ function handleFieldClick(field, x, y, fieldType) {
   }
 }
 
-let cardList;
+function getCards(){
+  loadJSON('/getCartas_USER/'+userServidor[0].id,(resposta)=>{
+
+    cartas_user=resposta;
+
+
+
+ });
+}
 
 function attackTIME() {
-  // Get the attack and defense values of each card
-  loadJSON('/getCartas', (dataDoServidor) => {
-     cardList.forEach((card) => {
-       // Find the card in the server data by id
-       const serverCard = dataDoServidor.find((cardData) => cardData.id === card.id);
- 
-       if (serverCard) {
-         // Update the attack and defense values of the card
-         card.ATK = serverCard.attack_carta;
-         card.DEF = serverCard.defend_carta;
-       }
-     });
- 
-     // Loop through all the cards
-     for (let i = 0; i < cardList.length; i++) {
-       for (let j = i + 1; j < cardList.length; j++) {
-         // Compare the attack and defense values of each card
-         if (cardList[i].ATK > cardList[j].ATK && cardList[i].DEF > cardList[j].DEF) {
-           // Update the card data on the server side
-           // Use a different API endpoint for this purpose
-         }
-       }
-     }
-  });
- }
 
-// function moveCard(field, i, j) {
-// if (field[i][j].hasCard && selectedCard === null) {
-//   // Se a tile de origem tem uma carta e nenhuma carta está selecionada, apenas a seleciona
-//   selectedCard = { row: i, col: j };
-//   //console.log("Selected card at:", i, j);
-// } else if (selectedCard !== null) {
-//   // Se uma carta já está selecionada, move a carta para a nova posição
-//   field[i][j].hasCard = true;
-//   field[selectedCard.row][selectedCard.col].hasCard = false;
-//   //console.log("Moved card to:", i, j);
-//   selectedCard = null; // Limpa a carta selecionada
-// }
-// }
+  getCards();
+
+// Verifica se cartas_user foi carregado
+if (cartas_user) {
+  // Ciclo para percorrer o array cartas_user e armazenar cada valor
+  for (let i = 0; i < cartas_user.length; i++) {
+    let valor_id_Carta = cartas_user[i].id_carta; 
+
+    // Faça algo com o valor, por exemplo, armazená-lo em outra variável ou realizar uma ação específica
+    console.log('Valor da Carta:', valor_id_Carta);
+  }
+} else {
+  console.log('Cartas do usuário não carregadas. Certifique-se de chamar getCards antes de attackTIME.');
+}
+}
+
+  // loadJSON('/getCartas_USER/'+userServidor[0].id,(resposta)=>{
+
+  //   cartas_user=resposta;
+
+    // console.log(cartas_user);
+    // loop();
+
+ //});
+
+
+  // // Get the attack and defense values of each card
+  // loadJSON('/getCartas', (dataDoServidor) => {
+  //    cardList.forEach((card) => {
+  //      // Find the card in the server data by id
+  //      const serverCard = dataDoServidor.find((cardData) => cardData.id === card.id);
+ 
+  //      if (serverCard) {
+  //        // Update the attack and defense values of the card
+  //        card.ATK = serverCard.attack_carta;
+  //        card.DEF = serverCard.defend_carta;
+  //      }
+  //    });
+ 
+  //    // Loop through all the cards
+  //    for (let i = 0; i < cardList.length; i++) {
+  //      for (let j = i + 1; j < cardList.length; j++) {
+  //        // Compare the attack and defense values of each card
+  //        if (cardList[i].ATK > cardList[j].ATK && cardList[i].DEF > cardList[j].DEF) {
+  //          // Update the card data on the server side
+  //          // Use a different API endpoint for this purpose
+  //        }
+  //      }
+  //    }
+  // });
+ 
+
+
+
 class Tile {
 constructor(x, y, tx, ty, w, h, hasCard,campo_teste) {
   this.x = x;

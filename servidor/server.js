@@ -153,8 +153,11 @@ app.listen(port, () => {
 
 //Buscar cartas
 
-app.get('/getCartas',(req,res)=>{
-  let sql="SELECT * FROM deck_carta";
+app.get('/getCartas/:id',(req,res)=>{
+
+  let id_carta=req.params.id_carta;
+
+  let sql="SELECT * FROM deck_carta WHERE id_carta='"+id_carta+"';"
   
 
   dbase.query(sql, (err,result)=>{
@@ -162,4 +165,20 @@ app.get('/getCartas',(req,res)=>{
     res.send(result);
     });
   
+});
+
+app.get('/getCartas_USER/:id',(req,res)=>{
+
+let id_User=req.params.id;
+
+let sql = "SELECT * FROM deck_user WHERE id_User='"+id_User+"';"
+
+    dbase.query(sql, (err,result)=>{
+       if(err) throw err; 
+
+        res.send(result);
+
+    });
+
+
 });
