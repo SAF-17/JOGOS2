@@ -182,3 +182,19 @@ let sql = "SELECT * FROM deck_user WHERE id_User='"+id_User+"';"
 
 
 });
+
+app.get('/getCartas_STATS/:id',(req,res)=>{
+
+  let id_carta=req.params.id;
+  
+  let sql = "SELECT * FROM deck_carta WHERE id_carta='"+id_carta+"';"
+  
+      dbase.query(sql, (err,result)=>{
+         if(err) throw err; 
+  
+          res.send(result);
+  
+      });
+  
+  
+  });

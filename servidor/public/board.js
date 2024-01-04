@@ -47,8 +47,8 @@ let tileHeight = height * 0.15;
 let rows = 3;
 let cols = 6;
 
-createField(playerField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.51, true,campo=1);
-createField(enemyField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.03, true,campo=3);
+createField(playerField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.51, true,campo=1,id_carta=2);
+createField(enemyField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.03, true,campo=3,id_carta=1);
 }
 
 function createField(field, rows, cols, tileWidth, tileHeight, initialX, initialY, hasInitialCard,campo) {
@@ -101,6 +101,8 @@ function handleFieldClick(field, x, y, fieldType) {
               }else if(field[i][j].hasCard===true){//Se o campo onde selecionar tiver carta
 
                 console.log("ATTACK TIME")
+                
+                //getCards();
                 attackTIME();
               }
             }else if (field[i][j].campo_teste === selectedCard.campo_teste) {
@@ -124,32 +126,66 @@ function handleFieldClick(field, x, y, fieldType) {
   }
 }
 
+
+let cartas_user;
+
 function getCards(){
   loadJSON('/getCartas_USER/'+userServidor[0].id,(resposta)=>{
 
     cartas_user=resposta;
 
-
+    if (cartas_user) {
+      // Ciclo para percorrer o array cartas_user e armazenar cada valor
+      for (let i = 0; i < cartas_user.length; i++) {
+        let valor_id_Carta = cartas_user[i].id_carta; 
+        let valor_att_Carta = cartas_user[i].attack_carta;
+        console.log()
+    
+        // Faça algo com o valor, por exemplo, armazená-lo em outra variável ou realizar uma ação específica
+        console.log('Valor da Carta:', valor_id_Carta);
+        console.log('Atttack:', valor_att_Carta  );
+      }
+    } else {
+      console.log('Cartas do usuário não carregadas. Certifique-se de chamar getCards antes de attackTIME.');
+    }
+    
 
  });
+ 
 }
 
 function attackTIME() {
+  
+  
 
-  getCards();
+  loadJSON('/getCartas_STATS/'+id_carta,(resposta)=>{
+
+    cartas_stats=resposta;
+
+    if (cartas_stats) {
+      // Ciclo para percorrer o array cartas_user e armazenar cada valor
+      for (let i = 0; i < cartas_stats.length; i++) {
+        let valor_id_Carta = cartas_stats[i].id_carta; 
+        let nome_carta = cartas_stats[i].nome_carta;
+        let valor_att_Carta = cartas_stats[i].attack_carta;
+        let valor_def_Carta = cartas_stats[i].defend_carta
+        console.log()
+    
+        // Faça algo com o valor, por exemplo, armazená-lo em outra variável ou realizar uma ação específica
+        console.log('Nome carta:', nome_carta);
+        console.log('Attack:', valor_att_Carta);
+        console.log('Defesa:', valor_def_Carta);
+       
+      }
+    } else {
+      console.log('Stats de defesa e ataque nao carregadas. Certifique-se de chamar getCards antes de attackTIME.');
+    }
+
+ });
+
 
 // Verifica se cartas_user foi carregado
-if (cartas_user) {
-  // Ciclo para percorrer o array cartas_user e armazenar cada valor
-  for (let i = 0; i < cartas_user.length; i++) {
-    let valor_id_Carta = cartas_user[i].id_carta; 
 
-    // Faça algo com o valor, por exemplo, armazená-lo em outra variável ou realizar uma ação específica
-    console.log('Valor da Carta:', valor_id_Carta);
-  }
-} else {
-  console.log('Cartas do usuário não carregadas. Certifique-se de chamar getCards antes de attackTIME.');
-}
 }
 
   // loadJSON('/getCartas_USER/'+userServidor[0].id,(resposta)=>{
@@ -191,7 +227,7 @@ if (cartas_user) {
 
 
 class Tile {
-constructor(x, y, tx, ty, w, h, hasCard,campo_teste) {
+constructor(x, y, tx, ty, w, h, hasCard,campo_teste,id_card) {
   this.x = x;
   this.y = y;
   this.tx = tx; //pos atual x
@@ -202,6 +238,7 @@ constructor(x, y, tx, ty, w, h, hasCard,campo_teste) {
   this.img_frente = imagem_carta_frente;
   this.hasCard = hasCard;
   this.campo_teste= campo_teste;// 1-azul , 3- vermelho
+  this.id_card= id_card;
 }
 
 draw_Tile(cellColor) {

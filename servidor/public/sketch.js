@@ -15,6 +15,7 @@ let imagem_carta_frente;
 let imagem_carta_costas;
 
 function preload(){ 
+  
   backgroundImage = loadImage('https://cdn.discordapp.com/attachments/955519593160540230/1173660207394586634/1699892790487_.png?ex=6564c33e&is=65524e3e&hm=f4d5b17bff894f86b52f332cacf86b81f5d64d31246ad05991b6e433a6449724&');
   backgroundImage2 = loadImage('https://cdn.discordapp.com/attachments/955519593160540230/1173655327284134098/OIG.png?ex=656df933&is=655b8433&hm=b26c2e3045184843cf6f1c68e2b4d24eeb261ddcfa9a1a5d1582f19343c6e517&');
   imagemLogo = loadImage('https://cdn.discordapp.com/attachments/955519593160540230/1173697054430744597/Untitled-2.png?ex=6564e590&is=65527090&hm=9a5534344450309afb83cea86ed8d7de6dc6f3493ab074871203612329904bfe&');
