@@ -14,6 +14,7 @@ function drawMenuIU(){
   distanciaButtonHorizontal= width/20;
   buttonBatalha();
   buttonLoja();
+  buttonCatalog();
 
 
 }
@@ -50,4 +51,26 @@ scene=3;
 removeMENU();
 loop();
 }
+function buttonCatalog(){
 
+  catalogBtn = createButton('Catalogo de cartas');
+  catalogBtn.position(centroVertical-distanciaButtonVertical, centroHorizontal- distanciaButtonHorizontal*2);
+  catalogBtn.style('background-color', '#a87a63');
+  catalogBtn.style('border', 'none');
+  catalogBtn.style('padding', '10px 20px');
+  catalogBtn.mousePressed(CatalogScene);
+
+}
+function CatalogScene(){
+scene=4;
+removeMENU();
+loop();
+}
+
+function removeMENU(){
+
+batalhaBtn.remove();
+lojaBtn.remove();
+catalogBtn.remove();
+
+}

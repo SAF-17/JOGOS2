@@ -43,7 +43,7 @@ app.get('/getUser',(req,res)=>{
     if(err) throw err;
     res.send(result);
     });
-  
+
 });
 
 const bcrypt = require('bcrypt');
@@ -74,27 +74,27 @@ app.post('/login',(req,res)=>{
 
 });
 
-  
+
 app.post('/postUser',async (req, res) => {
     let nome = req.body.name;
     let password_user = req.body.password;
 
     let sql_verificar = "SELECT * from user WHERE nome ='"+nome+"';"
 
-    
+
   dbase.query(sql_verificar, async (err,result)=>{
-    if(err) throw err; 
-  
+    if(err) throw err;
+
       if(result.length>0){
-      
+
         res.send({"ack":0})
-      
+
       }    try {
         const hashedPassword = await bcrypt.hash(password_user, saltRounds);
         let sql = "INSERT INTO user (nome, password) VALUES (?, ?)";
 
         dbase.query(sql, [nome, hashedPassword], (err, result) => {
-            if(err) throw err; 
+            if(err) throw err;
 
             res.send({"ack":1});
         });
@@ -104,7 +104,8 @@ app.post('/postUser',async (req, res) => {
 });
 
 });
-//buscar imagem de carta 
+
+//buscar imagem de carta
 app.get('/getImagem_carta_costas', (req, res) => {
   dbase.query('SELECT img_carta FROM deck_carta_base WHERE id_carta = 1', (error, results) => {
       if (error) throw error;
@@ -119,7 +120,7 @@ app.get('/getImagem_carta_costas', (req, res) => {
   });
 });
 
-//buscar imagem de carta 
+//buscar imagem de carta
 app.get('/getImagem_carta_frente', (req, res) => {
   dbase.query('SELECT img_carta FROM deck_carta_base WHERE id_carta = 2', (error, results) => {
       if (error) throw error;
@@ -158,13 +159,13 @@ app.get('/getCartas/:id',(req,res)=>{
   let id_carta=req.params.id_carta;
 
   let sql="SELECT * FROM deck_carta WHERE id_carta='"+id_carta+"';"
-  
+
 
   dbase.query(sql, (err,result)=>{
     if(err) throw err;
     res.send(result);
     });
-  
+
 });
 
 app.get('/getCartas_USER/:id',(req,res)=>{
@@ -174,7 +175,7 @@ let id_User=req.params.id;
 let sql = "SELECT * FROM deck_user WHERE id_User='"+id_User+"';"
 
     dbase.query(sql, (err,result)=>{
-       if(err) throw err; 
+       if(err) throw err;
 
         res.send(result);
 
@@ -186,15 +187,15 @@ let sql = "SELECT * FROM deck_user WHERE id_User='"+id_User+"';"
 app.get('/getCartas_STATS/:id',(req,res)=>{
 
   let id_carta=req.params.id;
-  
+
   let sql = "SELECT * FROM deck_carta WHERE id_carta='"+id_carta+"';"
-  
+
       dbase.query(sql, (err,result)=>{
-         if(err) throw err; 
-  
+         if(err) throw err;
+
           res.send(result);
-  
+
       });
-  
-  
+
+
   });

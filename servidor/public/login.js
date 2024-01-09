@@ -1,9 +1,9 @@
 
 
 //AUTHENTICATION VARIABLES---
-let nameInput; 
+let nameInput;
 let passwordInput;
-let name2Input; 
+let name2Input;
 let password2Input;
 let loginBtn;
 let registerBTN;
@@ -19,21 +19,21 @@ function login(){
         "password":password
     }
     httpPost('/login',user,'json',(respostaServidor)=>{
-      
+
       if(respostaServidor.length>0){
-       
+
        userServidor = respostaServidor;
           //remover campos login
         removeLogin();
         //mudar cena
-       
+
        scene=1;
        console.log(userServidor);
        loop();//inicia o loop
-        
+
        }else{
        alert("Login sem sucesso")    }
-       
+
       });
 }
 function removeLogin(){
@@ -47,18 +47,18 @@ function removeLogin(){
     password2Input.remove();
     registerBTN.remove();
     changeBTN.remove();
-    
 
-          
+
+
 }
 
 function getUser(){
-  
+
     loadJSON('/getUser',(dataDoServidor)=>{
       user.id=dataDoServidor[0].id;
       user.name=dataDoServidor[0].name;
-      
-  
+
+
       console.log(dataDoServidor);
     });}
 
@@ -68,7 +68,7 @@ function postUser(){
         password: password2Input.value()
       };
 
-      
+
 
     httpPost('/postUser',newUser,'json', (respostaServidor)=>{
 
@@ -77,23 +77,23 @@ function postUser(){
           name2Input.value('');
           password2Input.value('');
           alert("Utilizador já existe");
-       
+
           }else{
             name2Input.value('');
             password2Input.value('');
           alert("Registo com Sucesso")
-       
+
          }
         console.log(newUser)
-        
-        
+
+
       });
 }
 
  function login_registro() {
   createCanvas(windowWidth, windowHeight);
   background(backgroundImage);
- 
+
     let formWidth = 550; // Largura do formulário
     let formHeight = 350; // Altura do formulário
     let formXcenter = width / 2; // Centralize horizontalmente
@@ -102,15 +102,15 @@ function postUser(){
     let formY = (height - formHeight) / 2; // Centralize o formulário verticalmente
     push();
     imagemLogo.resize(300, 0); // 200 pixels de largura, altura proporcional
-    
+
     image(imagemLogo, formXcenter - imagemLogo.width / 2, formYcenter - imagemLogo.height / 2 -50 );
-    
+
 
     textSize(100);
     fill(255); // Define a cor do preenchimento (fundo) do texto como branco
     stroke(0); // Define a cor do contorno (stroke) do texto como preto
     strokeWeight(7); // Define a largura do contorno
-    
+
     textAlign(CENTER, CENTER);
     text("Magic Duelist", formXcenter, formYcenter );
 
@@ -118,9 +118,9 @@ function postUser(){
     // Desenhe o retângulo cinza claro
     fill("#faf5d4"); // Cor cinza claro
     rect(formX, formY, formWidth, formHeight);
-  
-    
-   
+
+
+
                   // Crie o formulário de login
                 textSize(32);
                 fill(0);
@@ -130,12 +130,12 @@ function postUser(){
                 nameInput = createInput('');
                 nameInput.position(formX + formWidth/10, formY + 150);
                 nameInput.size(150);
-              
+
                 text("Password", formX + formWidth/10, formY + 200);
                 passwordInput = createInput('','password');
                 passwordInput.position(formX + formWidth/10, formY + 220);
                 passwordInput.size(150);
-              
+
                 loginBtn = createButton('Login');
                 loginBtn.position(formX + formWidth/6, formY + 260);
                 loginBtn.style('background-color', '#a87a63');
@@ -152,12 +152,12 @@ function postUser(){
                 name2Input = createInput('');
                 name2Input.position(formX + formWidth/2+formWidth/10, formY + 150);
                 name2Input.size(150);
-              
+
                 text("Password", formX + formWidth/2+formWidth/10, formY + 200);
                 password2Input = createInput('','password');
                 password2Input.position(formX + formWidth/2+formWidth/10, formY + 220);
                 password2Input.size(150);
-              
+
                 registerBTN = createButton('Register');
                 registerBTN.position(formX + formWidth/2+formWidth/6, formY + 260);
                 registerBTN.style('background-color', '#a87a63');
@@ -174,37 +174,37 @@ function postUser(){
                 changeBTN.style('border', 'none');
                 changeBTN.style('padding', '10px 20px');
                 changeBTN.mousePressed(esconder_log_reg);
-   
+
     if(form_scene==true){ //Criar carta no register/ aparecer login
-                  
+
         image(imagem_carta_costas, formX + formWidth / 2, formY, formWidth / 2, formHeight);
         name2Input.remove();
         password2Input.remove();
         registerBTN.remove();
-        
-        
-    
+
+
+
         // Exiba ou crie os elementos de login
         nameInput.show();
         passwordInput.show();
         loginBtn.show();
 
-          
+
 
     }else if(form_scene==false){//Criar carta no login/aparecer register
-                 
+
             image(imagem_carta_costas, formX, formY, formWidth / 2, formHeight);
-            
+
             nameInput.remove();
             passwordInput.remove();
             loginBtn.remove();
-        
+
             // Exiba ou crie os elementos de registro
             name2Input.show();
             password2Input.show();
             registerBTN.show();
             }
-            
+
 }
 
 
@@ -220,11 +220,11 @@ function esconder_log_reg() {
 
   // Esconde ou mostra os elementos conforme necessário
   if (form_scene) { // Cena de login
-    
+
     nameInput.show();
     passwordInput.show();
     loginBtn.show();
-    
+
 
     name2Input.hide();
     password2Input.hide();
@@ -243,7 +243,7 @@ function esconder_log_reg() {
 
   // Redesenha a tela
   redraw();
-  
+
 }
 
 
