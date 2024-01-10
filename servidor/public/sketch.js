@@ -64,6 +64,7 @@ function draw(){
 
     buyMenuScene();
   }else if(scene==4){
+    CatalogScene();
 
   }
 
