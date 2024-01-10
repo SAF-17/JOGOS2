@@ -104,7 +104,6 @@ app.post('/postUser',async (req, res) => {
 });
 
 });
-//buscar imagem de carta 
 app.get('/getImagem_carta_costas', (req, res) => {
   dbase.query('SELECT img_carta FROM deck_carta_base WHERE id_carta = 1', (error, results) => {
       if (error) throw error;
