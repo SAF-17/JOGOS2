@@ -47,8 +47,8 @@ let tileHeight = height * 0.15;
 let rows = 3;
 let cols = 6;
 
-createField(playerField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.51, true,campo=1);
-createField(enemyField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.03, true,campo=3);
+createField(playerField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.51, true,campo=1,id_carta=2);
+createField(enemyField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.03, true,campo=3,id_carta=1);
 }
 
 function createField(field, rows, cols, tileWidth, tileHeight, initialX, initialY, hasInitialCard,campo) {
@@ -79,7 +79,6 @@ for (let i = 0; i < field.length; i++) {
   }
 }
 }
-
 function handleFieldClick(field, x, y, fieldType) {
   for (let i = 0; i < field.length; i++) {
     for (let j = 0; j < field[i].length; j++) {
@@ -115,21 +114,46 @@ function handleFieldClick(field, x, y, fieldType) {
 
 
 
-// function moveCard(field, i, j) {
-// if (field[i][j].hasCard && selectedCard === null) {
-//   // Se a tile de origem tem uma carta e nenhuma carta está selecionada, apenas a seleciona
-//   selectedCard = { row: i, col: j };
-//   //console.log("Selected card at:", i, j);
-// } else if (selectedCard !== null) {
-//   // Se uma carta já está selecionada, move a carta para a nova posição
-//   field[i][j].hasCard = true;
-//   field[selectedCard.row][selectedCard.col].hasCard = false;
-//   //console.log("Moved card to:", i, j);
-//   selectedCard = null; // Limpa a carta selecionada
-// }
-// }
+
+
+function attackTIME() {
+  
+  
+
+  loadJSON('/getCartas_STATS/'+id_carta,(resposta)=>{
+
+    cartas_stats=resposta;
+
+    if (cartas_stats) {
+      // Ciclo para percorrer o array cartas_user e armazenar cada valor
+      for (let i = 0; i < cartas_stats.length; i++) {
+        let valor_id_Carta = cartas_stats[i].id_carta; 
+        let nome_carta = cartas_stats[i].nome_carta;
+        let valor_att_Carta = cartas_stats[i].attack_carta;
+        let valor_def_Carta = cartas_stats[i].defend_carta
+        console.log()
+    
+        // Faça algo com o valor, por exemplo, armazená-lo em outra variável ou realizar uma ação específica
+        console.log('Nome carta:', nome_carta);
+        console.log('Attack:', valor_att_Carta);
+        console.log('Defesa:', valor_def_Carta);
+       
+      }
+    } else {
+      console.log('Stats de defesa e ataque nao carregadas. Certifique-se de chamar getCards antes de attackTIME.');
+    }
+
+ });
+
+
+// Verifica se cartas_user foi carregado
+
+}
+
+
+
 class Tile {
-constructor(x, y, tx, ty, w, h, hasCard,campo_teste) {
+constructor(x, y, tx, ty, w, h, hasCard,campo_teste,id_card) {
   this.x = x;
   this.y = y;
   this.tx = tx; //pos atual x
@@ -145,7 +169,7 @@ constructor(x, y, tx, ty, w, h, hasCard,campo_teste) {
 draw_Tile(cellColor) {
   fill(cellColor); // Use a cor passada como argumento
   rect(this.x, this.y, this.w, this.h);
-  if (this.hasCard) {
+  if (this.hasCard) {//cria carta
     if(this.tx == 2 && this.campo_teste== 1 || this.tx == 0 && this.campo_teste== 3 ){
     image(this.img_costas,this.x + this.w / 4, this.y + this.h / 4, this.w / 2, this.h /2);
     }else {
@@ -164,14 +188,14 @@ click_Tile(x, y) {
 }
 }
 
-function getCards(){
+function getCartas(){
 
-loadJSON('/getCards',(dataDoServidor)=>{
+loadJSON('/getCartas',(dataDoServidor)=>{
 
-  card.name=dataDoServidor[0].Name;
-  card.ATK=dataDoServidor[0].ATK;
-  card.DEF=dataDoServidor[0].DEF;
+  card.name=dataDoServidor[0].nome_carta;
+  card.ATK=dataDoServidor[0].attack_carta;
+  card.DEF=dataDoServidor[0].defend_carta;
 
-  console.log(dataDoServidor);
-  loop();
+  // console.log(dataDoServidor);
+  // loop();
 });}
