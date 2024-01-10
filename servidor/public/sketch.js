@@ -91,7 +91,7 @@ function  buyMenuScene(){
   drawBuyIU();
 }
 function  CatalogScene(){
-  background(backgroundImage2);
+  background(backgroundImage);
   catalogUI();
 }
 
