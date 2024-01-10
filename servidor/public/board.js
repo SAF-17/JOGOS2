@@ -90,9 +90,12 @@ function handleFieldClick(field, x, y, fieldType) {
           console.log("Selected card at:", i, j);
         } else if (selectedCard !== null) {
           // Se uma carta já está selecionada, move a carta para a nova posição
-          if (i !== selectedCard.row || j !== selectedCard.col) {
+          // if (i !== selectedCard.row || j !== selectedCard.col && field[i][j].campo_teste !== selectedCard.campo_teste ) {
+          // L-> PARA VERIFICAR SE ESTÁ A ATACAR O CAMPO ENIMIGO(NÃO DEIXA ANDAR NA HORIZONTAL)
+          
+            if (i !== selectedCard.row || j !== selectedCard.col && field[i][j].campo_teste !== selectedCard.campo_teste ) {
             // Verifica se a carta está sendo movida para uma posição diferente da posição inicial
-            if (field[i][j].campo_teste === selectedCard.campo_teste) {
+             if (field[i][j].campo_teste === selectedCard.campo_teste) {
               // Verifica se a origem e o destino estão no mesmo campo
               field[i][j].hasCard = true;
               field[selectedCard.row][selectedCard.col].hasCard = false;
@@ -100,7 +103,11 @@ function handleFieldClick(field, x, y, fieldType) {
             } else {
               console.log("Card cannot move across fields.");
             }
-          } else {
+          }if (field[i][j].campo_teste !== selectedCard.campo_teste && field[i][j].campo_teste !== selectedCard.campo_teste && field[i][j].hasCard === true){
+            console.log("Attack TIME")
+            console.log(selectedCard)
+
+          }else {
             console.log("Card stayed in the same position:", i, j);
           }
           selectedCard = null; // Limpa a carta selecionada
@@ -111,45 +118,6 @@ function handleFieldClick(field, x, y, fieldType) {
     }
   }
 }
-
-
-
-
-
-function attackTIME() {
-  
-  
-
-  loadJSON('/getCartas_STATS/'+id_carta,(resposta)=>{
-
-    cartas_stats=resposta;
-
-    if (cartas_stats) {
-      // Ciclo para percorrer o array cartas_user e armazenar cada valor
-      for (let i = 0; i < cartas_stats.length; i++) {
-        let valor_id_Carta = cartas_stats[i].id_carta; 
-        let nome_carta = cartas_stats[i].nome_carta;
-        let valor_att_Carta = cartas_stats[i].attack_carta;
-        let valor_def_Carta = cartas_stats[i].defend_carta
-        console.log()
-    
-        // Faça algo com o valor, por exemplo, armazená-lo em outra variável ou realizar uma ação específica
-        console.log('Nome carta:', nome_carta);
-        console.log('Attack:', valor_att_Carta);
-        console.log('Defesa:', valor_def_Carta);
-       
-      }
-    } else {
-      console.log('Stats de defesa e ataque nao carregadas. Certifique-se de chamar getCards antes de attackTIME.');
-    }
-
- });
-
-
-// Verifica se cartas_user foi carregado
-
-}
-
 
 
 class Tile {
@@ -199,3 +167,9 @@ loadJSON('/getCartas',(dataDoServidor)=>{
   // console.log(dataDoServidor);
   // loop();
 });}
+
+
+
+function battle(){
+  
+}
