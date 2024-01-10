@@ -58,10 +58,10 @@ function buttonCatalog(){
   catalogBtn.style('background-color', '#a87a63');
   catalogBtn.style('border', 'none');
   catalogBtn.style('padding', '10px 20px');
-  catalogBtn.mousePressed(CatalogScene);
+  catalogBtn.mousePressed(UserCatalogScene);
 
 }
-function CatalogScene(){
+function UserCatalogScene(){
 scene=4;
 removeMENU();
 loop();

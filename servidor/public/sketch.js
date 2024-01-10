@@ -92,6 +92,6 @@ function  buyMenuScene(){
 }
 function  CatalogScene(){
   background(backgroundImage);
-  catalogUI();
+  catalogIU();
 }
 

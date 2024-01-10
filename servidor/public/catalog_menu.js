@@ -4,7 +4,6 @@ const cardsPerRow = 5; // Número de cartas por linha
 const cardWidth = 150; // Largura de cada carta
 const cardHeight = 180; // Altura de cada carta
 let imagens = []; // Array para armazenar as imagens
-let hoverIndex = -1; // Índice da carta sobre a qual o mouse está passando
 
 function catalogIU() {
   buttonLoja();
@@ -34,23 +33,17 @@ function catalogIU() {
 
         // Desenha quadrado da carta
         fill(200);
+        if (mouseIsOverRect(x, y, cardWidth, cardHeight)) {
+          fill(220); // Altera a cor quando o mouse está sobre a carta
+          displayCardDetails(carta, x, y, cardWidth, cardHeight);
+        }
         rect(x, y, cardWidth, cardHeight);
 
         // Carrega a imagem dinamicamente durante o loop
         loadImage(`/img/${carta.nome_carta}.png`, (img) => {
           // Exibe a imagem da carta
-          image(img, x, y, cardWidth, cardHeight);
+          image(img, x, y, cardWidth, cardHeight / 2);
         });
-
-        // Verifica se o mouse está sobre a carta
-        if (mouseOverCard(x, y, cardWidth, cardHeight)) {
-          hoverIndex = i;
-        }
-      }
-
-      // Exibe as informações da carta sobreposta à imagem
-      if (hoverIndex !== -1) {
-        displayCardDetails(cartasData[hoverIndex]);
       }
     } else {
       // Caso o usuário não tenha cartas, exiba uma mensagem
@@ -62,21 +55,18 @@ function catalogIU() {
   });
 }
 
-// Função para exibir os detalhes da carta sobreposta à imagem
-function displayCardDetails(carta) {
+// Função para exibir os detalhes da carta
+function displayCardDetails(carta, x, y, w, h) {
   textSize(12);
   textAlign(LEFT, TOP);
-  fill(200); // Cor de fundo para destacar as informações
-  rect(50, 50, cardWidth * cardsPerRow + 20 * (cardsPerRow - 1), cardHeight + 20);
-
-  fill(0); // Cor do texto
-  text(`Nome: ${carta.nome_carta}`, 50, 50);
-  text(`Attack: ${carta.attack_carta}`, 50, 70);
-  text(`Defesa: ${carta.defend_carta}`, 50, 90);
+  fill(0);
+  text(`Nome: ${carta.nome_carta}`, x, y + h  + 10);
+  text(`Attack: ${carta.attack_carta}`, x, y + h + 30);
+  text(`Defesa: ${carta.defend_carta}`, x, y + h  + 50);
   // Adapte conforme necessário para exibir outras informações da carta
 }
 
-// Função para verificar se o mouse está sobre uma carta
-function mouseOverCard(x, y, w, h) {
+// Função para verificar se o mouse está sobre um retângulo
+function mouseIsOverRect(x, y, w, h) {
   return mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h;
 }

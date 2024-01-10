@@ -168,21 +168,27 @@ app.get('/getCartas/:id',(req,res)=>{
 
 });
 
-app.get('/getCartas_USER/:id',(req,res)=>{
 
-let id_User=req.params.id;
+app.get('/getCartasAttributes_by_User/:id', (req, res) => {
+  let id = req.params.id;
 
-let sql = "SELECT * FROM deck_user WHERE id_User='"+id_User+"';"
+  let sql = `
+    SELECT dc.nome_carta, dc.attack_carta, dc.defend_carta
+    FROM deck_user du
+    JOIN deck_carta dc ON du.id_carta = dc.id_carta
+    WHERE du.id_User = ?
+  `;
 
-    dbase.query(sql, (err,result)=>{
-       if(err) throw err;
+  dbase.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error("Erro na consulta SQL:", err);
+      return res.status(500).send("Erro interno do servidor");
+    }
 
-        res.send(result);
-
-    });
-
-
+    res.send(result);
+  });
 });
+
 
 app.get('/getCartas_STATS/:id',(req,res)=>{
 

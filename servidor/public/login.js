@@ -8,6 +8,7 @@ let password2Input;
 let loginBtn;
 let registerBTN;
 let changeBTN;
+let userServidor;
 //---------------------------
 
 function login(){
@@ -22,7 +23,7 @@ function login(){
 
       if(respostaServidor.length>0){
 
-       userServidor = respostaServidor;
+       userServidor = respostaServidor[0];
           //remover campos login
         removeLogin();
         //mudar cena
