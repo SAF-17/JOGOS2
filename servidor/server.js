@@ -105,47 +105,6 @@ app.post('/postUser',async (req, res) => {
 
 });
 
-//buscar imagem de carta
-app.get('/getImagem_carta_costas', (req, res) => {
-  dbase.query('SELECT img_carta FROM deck_carta_base WHERE id_carta = 1', (error, results) => {
-      if (error) throw error;
-
-      if (results.length > 0) {
-          const imageData = results[0].img_carta;
-          res.contentType('image/jpeg');
-          res.end(imageData, 'binary');
-      } else {
-          res.status(404).send('Image not found');
-      }
-  });
-});
-
-//buscar imagem de carta
-app.get('/getImagem_carta_frente', (req, res) => {
-  dbase.query('SELECT img_carta FROM deck_carta_base WHERE id_carta = 2', (error, results) => {
-      if (error) throw error;
-
-      if (results.length > 0) {
-          const imageData = results[0].img_carta;
-          res.contentType('image/jpeg');
-          res.end(imageData, 'binary');
-      } else {
-          res.status(404).send('Image not found');
-      }
-  });
-});
-
-
-
-
-
-
-
-
-
-
-
-
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
