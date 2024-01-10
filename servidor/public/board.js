@@ -52,7 +52,7 @@ createField(enemyField, rows, cols, tileWidth, tileHeight, width * 0.33, height 
 }
 
 function createField(field, rows, cols, tileWidth, tileHeight, initialX, initialY, hasInitialCard,campo) {
- 
+
   for (let i = 0; i < rows; i++) {
   field[i] = [];
   for (let j = 0; j < cols; j++) {
@@ -67,8 +67,8 @@ function createField(field, rows, cols, tileWidth, tileHeight, initialX, initial
       campo_teste = campo,
       //hasInitialCard && i === 0 // Check for the first row
     );
-   
-  } 
+
+  }
 }
 }
 
@@ -92,7 +92,7 @@ function handleFieldClick(field, x, y, fieldType) {
           // Se uma carta já está selecionada, move a carta para a nova posição
           // if (i !== selectedCard.row || j !== selectedCard.col && field[i][j].campo_teste !== selectedCard.campo_teste ) {
           // L-> PARA VERIFICAR SE ESTÁ A ATACAR O CAMPO ENIMIGO(NÃO DEIXA ANDAR NA HORIZONTAL)
-          
+
             if (i !== selectedCard.row || j !== selectedCard.col && field[i][j].campo_teste !== selectedCard.campo_teste ) {
             // Verifica se a carta está sendo movida para uma posição diferente da posição inicial
              if (field[i][j].campo_teste === selectedCard.campo_teste) {
@@ -143,7 +143,7 @@ draw_Tile(cellColor) {
     }else {
       image(this.img_frente,this.x + this.w / 4, this.y + this.h / 4, this.w / 2, this.h /2);
     }
-    
+
   }
 }
 
@@ -168,8 +168,3 @@ loadJSON('/getCartas',(dataDoServidor)=>{
   // loop();
 });}
 
-
-
-function battle(){
-  
-}
