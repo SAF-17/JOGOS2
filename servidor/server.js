@@ -105,10 +105,6 @@ app.post('/postUser',async (req, res) => {
 
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
-
 
 
 //Buscar cartas
@@ -126,6 +122,8 @@ app.get('/getCartas/:id',(req,res)=>{
     });
 
 });
+
+
 
 
 app.get('/getCartasAttributes_by_User/:id', (req, res) => {
@@ -164,3 +162,113 @@ app.get('/getCartas_STATS/:id',(req,res)=>{
 
 
   });
+
+
+
+
+
+  //mudar turno
+
+
+
+  app.get('/getGame/:id',(req,res)=>{
+
+    let id = req.params.id;
+  
+    let sql = "SELECT * FROM Game WHERE Estado = "+0+""
+  
+      dbase.query(sql, (err,result)=>{
+      if(err) throw err; 
+      res.send(result);
+      dadosJogo=result;
+      console.log(dadosJogo);
+   
+      });    });
+  
+  app.post('/atualizaPos',(req,res)=>{
+  
+      let id=req.body.id;
+      let pos=req.body.novaPos;
+  
+      let sql= "UPDATE Game SET PlayerPos='"+pos+"'WHERE PlayerId='"+id+"';"
+  
+      dbase.query(sql, (err,result)=>{
+      if(err) throw err; 
+      
+      res.send(result);
+   
+      });
+  
+    });
+  
+  
+  app.post('/mudaTurno',(req,res)=>{
+  
+    let playerId = req.body.id;
+  
+    let sql ="SELECT * FROM Game;"
+  
+     dbase.query(sql, (err,result)=>{
+      if(err) throw err; 
+      
+      for(let i=0;i<result.length;i++){
+  
+        if(playerId==result[i].PlayerId){
+  
+        let sql = "UPDATE Game SET Turn='"+0+"'WHERE PlayerId='"+result[i].PlayerId+"';"
+              dbase.query(sql, (err,result)=>{
+                  if(err) throw err; 
+                    res.send(result);
+                 });
+         
+        }else{
+  
+           let sql = "UPDATE Game SET Turn='"+1+"'WHERE PlayerId='"+result[i].PlayerId+"';"
+              dbase.query(sql, (err,result)=>{
+                  if(err) throw err; 
+                    res.send(result);
+                 });
+          break;
+        }
+  
+  
+      }
+   
+      });})
+  
+  app.get('/verificaTurno/:id',(req,res)=>{
+  
+  let playerID = req.params.id;
+  
+  let sql = "SELECT Turn FROM Game WHERE PlayerId='"+playerID+"';"
+  
+      dbase.query(sql, (err,result)=>{
+       if(err) throw err; 
+       res.send(result);
+   
+      });
+  
+  });
+
+
+  // Adicione esta rota ao final do seu arquivo
+
+app.get('/getRandomCard', (req, res) => {
+  // Consulta SQL para obter todas as cartas do deck
+  let sql = "SELECT * FROM deck_carta";
+
+  dbase.query(sql, (err, result) => {
+    if (err) throw err;
+
+    // Seleciona uma carta aleatória do resultado da consulta
+    const randomIndex = Math.floor(Math.random() * result.length);
+    const randomCard = result[randomIndex];
+
+    res.send(randomCard);
+    console.log(result);
+  });
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})

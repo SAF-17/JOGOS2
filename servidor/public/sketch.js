@@ -21,16 +21,7 @@ function preload(){
   imagemLogo = loadImage('https://cdn.discordapp.com/attachments/955519593160540230/1173697054430744597/Untitled-2.png?ex=6564e590&is=65527090&hm=9a5534344450309afb83cea86ed8d7de6dc6f3493ab074871203612329904bfe&');
   imagem_carta_costas = loadImage('https://media.discordapp.net/attachments/955519593160540230/1174034067537272982/711eda25308c65a7756751088866e181.jpg?ex=65661f6e&is=6553aa6e&hm=071145e645cf5706dd8612decd8e077e2f7c20ca77509f6bc03aa6912fe774a6&=&width=253&height=369');
   imagem_carta_frente = loadImage('https://media.discordapp.net/attachments/955519593160540230/1173684520726302730/OIG.png?ex=656e1463&is=655b9f63&hm=1a7dd8d351c040f852e1b5c7189b5a269c0d19c6324d179a39937e3d85be2981&=&format=webp&width=369&height=369');
-//   imagem_carta_frente = loadImage('/getImagem_carta_frente', () => {
-//     console.log('Image loaded successfully');
-// }, (error) => {
-//     console.error('Error loading image:', error);
-// });
-//   imagem_carta_costas = loadImage('/getImagem_carta_costas', () => {
-//     console.log('Image loaded successfully');
-// }, (error) => {
-//     console.error('Error loading image:', error);
-// });
+  
 
   // getUser() Apresenta os utilizadores criados na consola
     }
@@ -56,7 +47,7 @@ function draw(){
   if (!executedOnce) {
         // Executa a ação apenas uma vez quando scene é igual a 2
         createFields();
-
+        PlayerHand();
         executedOnce = true;
       }gameScene();
 

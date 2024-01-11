@@ -6,8 +6,9 @@ let card = {
   "ATK":1,
   "DEF":1,
 };
-
+let PlayerCatalog=[];
 let campo=0;
+let numberOfCards=10;
 
 function mousePressed() {
 handleFieldClick(playerField, mouseX, mouseY, "player");
@@ -39,6 +40,7 @@ handleFieldClick(enemyField, mouseX, mouseY, "enemy");
 function drawFields() {
 drawField(playerField, color(0, 0, 255)); // Azul para o campo do jogador
 drawField(enemyField, color(255, 0, 0)); // Vermelho para o campo do inimigo
+
 }
 
 function createFields() {
@@ -46,7 +48,7 @@ let tileWidth = width * 0.10;
 let tileHeight = height * 0.15;
 let rows = 3;
 let cols = 6;
-
+PlayerHand();
 createField(playerField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.51, true,campo=1,id_carta=2);
 createField(enemyField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.03, true,campo=3,id_carta=1);
 }
@@ -132,6 +134,7 @@ constructor(x, y, tx, ty, w, h, hasCard,campo_teste,id_card) {
   this.img_frente = imagem_carta_frente;
   this.hasCard = hasCard;
   this.campo_teste= campo_teste;// 1-azul , 3- vermelho
+  this.id_carta_campo=id_carta;
 }
 
 draw_Tile(cellColor) {
@@ -140,6 +143,7 @@ draw_Tile(cellColor) {
   if (this.hasCard) {//cria carta
     if(this.tx == 2 && this.campo_teste== 1 || this.tx == 0 && this.campo_teste== 3 ){
     image(this.img_costas,this.x + this.w / 4, this.y + this.h / 4, this.w / 2, this.h /2);
+
     }else {
       image(this.img_frente,this.x + this.w / 4, this.y + this.h / 4, this.w / 2, this.h /2);
     }
@@ -167,4 +171,21 @@ loadJSON('/getCartas',(dataDoServidor)=>{
   // console.log(dataDoServidor);
   // loop();
 });}
+
+function PlayerHand(){
+  loadJSON(`/getCartasAttributes_by_User/${userServidor.id}`, (data) => {
+    if (data && data.length > 0) {
+      // Armazena os dados das cartas na variável global
+      cartasData = data;
+      console.log(cartasData)
+      
+    } else {
+      // Caso o usuário não tenha cartas, exiba uma mensagem
+      textSize(18);
+      fill(255);
+      textAlign(LEFT, TOP);
+      text('Nenhuma carta disponível.', 50, 50);
+    }
+  });
+};
 

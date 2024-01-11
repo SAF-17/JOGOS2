@@ -1,6 +1,6 @@
-let playerMoney = 100;
+let playerMoney;
 let cardPurchaseAreaWidth;
-
+let carta;
 
 
 function drawBuyIU(){
@@ -32,16 +32,25 @@ function drawCardPurchaseArea(x, y, buttonText) {
 }
 
 
-
 function buySingleCard() {
-  // Implement logic for buying a single card
-  if (playerMoney >= 10) {
-    playerMoney -= 10; // Deduct money for the purchase
-    console.log("Bought a single card!");
-  } else {
-    console.log("Not enough money to buy a single card.");
-  }
+  loadJSON(`/getRandomCard`, (data) => {
+    if (data && data.length > 0) {
+      // Embaralha os dados de modo aleatório
+      carta = data;
+      console.log(carta);
+    } else {
+     
+    }
+
+    if (playerMoney >= 10) {
+      playerMoney -= 10; // Deduz dinheiro pela compra
+      console.log(`Bought a single card: ${carta.nome_carta}`);
+    } else {
+      console.log('Not enough money to buy a single card.');
+    }
+  });
 }
+
 
 function buyPackOfThreeCards() {
   // Implement logic for buying a pack of three cards
