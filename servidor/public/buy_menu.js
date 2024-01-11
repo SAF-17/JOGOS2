@@ -35,11 +35,34 @@ function drawCardPurchaseArea(x, y, buttonText) {
 function buySingleCard() {
   loadJSON(`/getRandomCard`, (data) => {
     if (data && data.length > 0) {
-      // Embaralha os dados de modo aleatório
       carta = data;
       console.log(carta);
+
+      // Adiciona a carta ao deck do usuário no backend
+      const userId = 1; // Substitua pelo ID do usuário logado
+      const idCartaPack = carta.id_carta; // Substitua pelo campo correto na tabela de cartas
+
+      fetch('http://localhost:3000/addCardToDeck', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: userId,
+          idCartaPack: idCartaPack,
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.ack === 1) {
+            console.log(`Carta ${carta.nome_carta} adicionada ao deck com sucesso!`);
+          } else {
+            console.log('Erro ao adicionar carta ao deck.');
+          }
+        })
+        .catch(error => console.error('Erro ao adicionar carta ao deck:', error));
     } else {
-     
+      console.log('Erro ao obter carta aleatória.');
     }
 
     if (playerMoney >= 10) {

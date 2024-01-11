@@ -113,7 +113,7 @@ function postUser(){
     strokeWeight(7); // Define a largura do contorno
 
     textAlign(CENTER, CENTER);
-    text("Magic Duelist", formXcenter, formYcenter );
+    text("Divine Conflicts", formXcenter, formYcenter );
 
     pop();
     // Desenhe o retângulo cinza claro
@@ -170,7 +170,7 @@ function postUser(){
                 //botão troca de form
 
                 changeBTN = createButton('LOGIN/REGISTAR');
-                changeBTN.position(formX+formWidth/3  , formHeight*1.7  );
+                changeBTN.position(formX+formWidth/3  , formHeight*2  );
                 changeBTN.style('background-color', '#a87a63');
                 changeBTN.style('border', 'none');
                 changeBTN.style('padding', '10px 20px');

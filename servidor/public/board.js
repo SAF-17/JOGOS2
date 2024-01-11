@@ -9,6 +9,9 @@ let card = {
 let PlayerCatalog=[];
 let campo=0;
 let numberOfCards=10;
+let idCounter=0;
+let playerHand=[];
+
 
 function mousePressed() {
 handleFieldClick(playerField, mouseX, mouseY, "player");
@@ -49,15 +52,16 @@ let tileHeight = height * 0.15;
 let rows = 3;
 let cols = 6;
 PlayerHand();
-createField(playerField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.51, true,campo=1,id_carta=2);
-createField(enemyField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.03, true,campo=3,id_carta=1);
+createField(playerField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.51, true,campo=1);
+createField(enemyField, rows, cols, tileWidth, tileHeight, width * 0.33, height * 0.03, true,campo=3);
 }
-
+let imagePath;
 function createField(field, rows, cols, tileWidth, tileHeight, initialX, initialY, hasInitialCard,campo) {
-
+  
   for (let i = 0; i < rows; i++) {
   field[i] = [];
   for (let j = 0; j < cols; j++) {
+    
     field[i][j] = new Tile(
       initialX + j * tileWidth,
       initialY + i * tileHeight,
@@ -68,6 +72,7 @@ function createField(field, rows, cols, tileWidth, tileHeight, initialX, initial
       hasInitialCard && i  === rows -campo, // Adiciona uma carta apenas à última linha da matriz
       campo_teste = campo,
       //hasInitialCard && i === 0 // Check for the first row
+      idCounter++
     );
 
   }
@@ -131,10 +136,11 @@ constructor(x, y, tx, ty, w, h, hasCard,campo_teste,id_card) {
   this.w = w; // Largura do retângulo
   this.h = h; // Altura do retângulo
   this.img_costas = imagem_carta_costas;
-  this.img_frente = imagem_carta_frente;
+  this.img_frente = loadImage(imagePath);
   this.hasCard = hasCard;
   this.campo_teste= campo_teste;// 1-azul , 3- vermelho
   this.id_carta_campo=id_carta;
+  
 }
 
 draw_Tile(cellColor) {
@@ -178,7 +184,7 @@ function PlayerHand(){
       // Armazena os dados das cartas na variável global
       cartasData = data;
       console.log(cartasData)
-      
+      playerHand=cartasData;
     } else {
       // Caso o usuário não tenha cartas, exiba uma mensagem
       textSize(18);

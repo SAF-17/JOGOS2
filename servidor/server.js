@@ -235,6 +235,25 @@ app.get('/getCartas_STATS/:id',(req,res)=>{
       }
    
       });})
+
+      app.post('/addCardToDeck', (req, res) => {
+        // Obtém os dados do corpo da requisição
+        const userId = req.body.userId; // Substitua pelo nome correto do campo na sua tabela de usuários
+        const idCartaPack = req.body.idCartaPack; // Substitua pelo nome correto do campo na sua tabela de cartas
+      
+        // Insere uma nova linha na tabela deck_user
+        const sql = "INSERT INTO deck_user (id_user, id_carta) VALUES (?, ?)";
+        dbase.query(sql, [userId, idCartaPack], (err, result) => {
+          if (err) {
+            console.error('Erro ao adicionar carta ao deck:', err);
+            res.status(500).send('Erro interno do servidor');
+          } else {
+            console.log('Carta adicionada ao deck com sucesso!');
+            res.send({ "ack": 1 });
+          }
+        });
+      });
+      
   
   app.get('/verificaTurno/:id',(req,res)=>{
   
